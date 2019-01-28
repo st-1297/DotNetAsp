@@ -28,6 +28,14 @@ namespace ASPDotNetClient.Forms
             }
         }
 
+        private async void btnGetById_Click(object sender, EventArgs e)
+        {
+
+            var id = int.Parse(txtId.Text);
+            var item = await HttpClientManager.GetProductByIdAsync(id);
+            txtLog.Text += item.ID + "\t" + item.Name + "\t" + item.Category + "\t" + item.Price;
+        }
+
         private void btnPost_Click(object sender, EventArgs e)
         {
 
@@ -44,6 +52,5 @@ namespace ASPDotNetClient.Forms
         }
 
         #endregion
-
     }
 }

@@ -17,17 +17,6 @@ namespace ASPDotNetClient.Logic
         private static HttpClient client = new HttpClient();
 
         /// <summary>
-        /// 静的コンストラクタです。
-        /// </summary>
-        private HttpClientManager()
-        {
-            client.BaseAddress = new Uri(Program.rootUri);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        /// <summary>
         /// 認証ありのWeb APIを利用する時に利用するパラメータです。
         /// </summary>
         public static string BearerValue { get; set; } = string.Empty;
@@ -66,6 +55,28 @@ namespace ASPDotNetClient.Logic
             }
 
             return product?.ToArray();
+        }
+
+        public static async Task<Product> GetProductByIdAsync(int id)
+        {
+            Product product = null;
+            var param = $"api/products/?id={id}";
+            var url = $"{Program.rootUri}{param}";
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    product = await response.Content.ReadAsAsync<Product>();
+                }
+            }
+            catch
+            {
+
+            }
+
+            return product;
         }
 
         public static async Task<Uri> CreateProductAsync(Product product)

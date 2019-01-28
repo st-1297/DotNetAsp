@@ -34,6 +34,8 @@
             this.btnPut = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.txtLog = new System.Windows.Forms.TextBox();
+            this.btnGetById = new System.Windows.Forms.Button();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblLog
@@ -50,37 +52,37 @@
             this.btnGet.Location = new System.Drawing.Point(129, 34);
             this.btnGet.Name = "btnGet";
             this.btnGet.Size = new System.Drawing.Size(75, 23);
-            this.btnGet.TabIndex = 1;
+            this.btnGet.TabIndex = 0;
             this.btnGet.Text = "Get";
             this.btnGet.UseVisualStyleBackColor = true;
             this.btnGet.Click += new System.EventHandler(this.btnGet_Click);
             // 
             // btnPost
             // 
-            this.btnPost.Location = new System.Drawing.Point(255, 34);
+            this.btnPost.Location = new System.Drawing.Point(129, 66);
             this.btnPost.Name = "btnPost";
             this.btnPost.Size = new System.Drawing.Size(75, 23);
-            this.btnPost.TabIndex = 2;
+            this.btnPost.TabIndex = 3;
             this.btnPost.Text = "Post";
             this.btnPost.UseVisualStyleBackColor = true;
             this.btnPost.Click += new System.EventHandler(this.btnPost_Click);
             // 
             // btnPut
             // 
-            this.btnPut.Location = new System.Drawing.Point(363, 34);
+            this.btnPut.Location = new System.Drawing.Point(225, 66);
             this.btnPut.Name = "btnPut";
             this.btnPut.Size = new System.Drawing.Size(75, 23);
-            this.btnPut.TabIndex = 3;
+            this.btnPut.TabIndex = 4;
             this.btnPut.Text = "Put";
             this.btnPut.UseVisualStyleBackColor = true;
             this.btnPut.Click += new System.EventHandler(this.btnPut_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(488, 34);
+            this.btnDelete.Location = new System.Drawing.Point(319, 66);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 4;
+            this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -96,11 +98,30 @@
             this.txtLog.TabIndex = 5;
             this.txtLog.TabStop = false;
             // 
+            // btnGetById
+            // 
+            this.btnGetById.Location = new System.Drawing.Point(319, 34);
+            this.btnGetById.Name = "btnGetById";
+            this.btnGetById.Size = new System.Drawing.Size(75, 23);
+            this.btnGetById.TabIndex = 2;
+            this.btnGetById.Text = "GetById";
+            this.btnGetById.UseVisualStyleBackColor = true;
+            this.btnGetById.Click += new System.EventHandler(this.btnGetById_Click);
+            // 
+            // txtId
+            // 
+            this.txtId.Location = new System.Drawing.Point(225, 36);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(75, 19);
+            this.txtId.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtId);
+            this.Controls.Add(this.btnGetById);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnPut);
@@ -122,5 +143,7 @@
         private System.Windows.Forms.Button btnPut;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.Button btnGetById;
+        private System.Windows.Forms.TextBox txtId;
     }
 }

@@ -26,5 +26,6 @@ namespace ASPDotNetWebApiPlusForms.Models
         }
     
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Book> Book { get; set; }
     }
 }

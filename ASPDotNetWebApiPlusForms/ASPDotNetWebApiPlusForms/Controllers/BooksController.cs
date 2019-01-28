@@ -13,57 +13,44 @@ using ASPDotNetWebApiPlusForms.Models;
 
 namespace ASPDotNetWebApiPlusForms.Controllers
 {
-    public class ProductsController : ApiController
+    public class BooksController : ApiController
     {
         private SQLServerOnAzure db = new SQLServerOnAzure();
 
-        // GET: api/Products
-        public IQueryable<Product> GetProduct()
+        // GET: api/Books
+        public IQueryable<Book> GetBook()
         {
-            return db.Product;
+            return db.Book;
         }
 
-        // GET: api/Products/5
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> GetProduct(int id)
+        // GET: api/Books/5
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> GetBook(int id)
         {
-            Product product = await db.Product.FindAsync(id);
-            if (product == null)
+            Book book = await db.Book.FindAsync(id);
+            if (book == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(book);
         }
 
-        //// GET: api/Products/5
-        //[ResponseType(typeof(Product))]
-        //public async Task<Product> GetProductById(int id)
-        //{
-        //    Product product = await db.Product.FindAsync(id);
-        //    if (product == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    return product;
-        //}
-
-        // PUT: api/Products/5
+        // PUT: api/Books/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        public async Task<IHttpActionResult> PutBook(int id, Book book)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.ID)
+            if (id != book.ID)
             {
                 return BadRequest();
             }
 
-            db.Entry(product).State = EntityState.Modified;
+            db.Entry(book).State = EntityState.Modified;
 
             try
             {
@@ -71,7 +58,7 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!BookExists(id))
                 {
                     return NotFound();
                 }
@@ -84,35 +71,35 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Products
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> PostProduct(Product product)
+        // POST: api/Books
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> PostBook(Book book)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Product.Add(product);
+            db.Book.Add(book);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.ID }, product);
+            return CreatedAtRoute("DefaultApi", new { id = book.ID }, book);
         }
 
-        // DELETE: api/Products/5
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> DeleteProduct(int id)
+        // DELETE: api/Books/5
+        [ResponseType(typeof(Book))]
+        public async Task<IHttpActionResult> DeleteBook(int id)
         {
-            Product product = await db.Product.FindAsync(id);
-            if (product == null)
+            Book book = await db.Book.FindAsync(id);
+            if (book == null)
             {
                 return NotFound();
             }
 
-            db.Product.Remove(product);
+            db.Book.Remove(book);
             await db.SaveChangesAsync();
 
-            return Ok(product);
+            return Ok(book);
         }
 
         protected override void Dispose(bool disposing)
@@ -124,9 +111,9 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProductExists(int id)
+        private bool BookExists(int id)
         {
-            return db.Product.Count(e => e.ID == id) > 0;
+            return db.Book.Count(e => e.ID == id) > 0;
         }
     }
 }
