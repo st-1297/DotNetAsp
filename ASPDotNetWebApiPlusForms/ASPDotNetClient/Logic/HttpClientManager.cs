@@ -14,12 +14,23 @@ namespace ASPDotNetClient.Logic
 {
     class HttpClientManager
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private static HttpClient client = new HttpClient();
 
         /// <summary>
         /// 認証ありのWeb APIを利用する時に利用するパラメータです。
         /// </summary>
         public static string BearerValue { get; set; } = string.Empty;
+
+        /// <summary>
+        /// ベースURIを設定します
+        /// </summary>
+        internal static void SetRootUri(string uri)
+        {
+            client.BaseAddress = new Uri(uri);
+        }
 
         public static async Task<T> ExecutePostAsync<T>(string url, T contents)
         {
@@ -38,8 +49,7 @@ namespace ASPDotNetClient.Logic
         public static async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
             List<Product> product = null;
-            var param = "api/products/";
-            var url = $"{Program.rootUri}{param}";
+            var url = "products/";
 
             try
             {
@@ -60,8 +70,7 @@ namespace ASPDotNetClient.Logic
         public static async Task<Product> GetProductByIdAsync(int id)
         {
             Product product = null;
-            var param = $"api/products/?id={id}";
-            var url = $"{Program.rootUri}{param}";
+            var url = $"products/?id={id}";
 
             try
             {
@@ -79,15 +88,54 @@ namespace ASPDotNetClient.Logic
             return product;
         }
 
-        public static async Task<Uri> CreateProductAsync(Product product)
+        /// <summary>
+        /// ISPエントリ更新画面情報更新
+        /// </summary>
+        /// <param name="receiptId"></param>
+        /// <param name="aplId"></param>
+        /// <param name="entryId"></param>
+        /// <returns></returns>
+        public static async Task<Product> CreateProductAsync(Product product)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/products", product);
-            response.EnsureSuccessStatusCode();
+            var json = JsonConvert.SerializeObject(product);
+            var content = new StringContent(json, Encoding.Unicode, "application/json");
+            var response = await client.PostAsync("products/", content).ConfigureAwait(false);
 
-            // return URI of the created resource.
-            return response.Headers.Location;
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+            var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<Product>(body);
         }
+
+        //public static async Task<Uri> CreateProductAsync(Product product)
+        //{
+            
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //    var json = JsonConvert.SerializeObject(product);
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //    HttpResponseMessage response = null;
+
+        //    try
+        //    {
+        //        var url = "products/";
+        //        //response = await client.PostAsync("api/products", content);
+        //        response = await client.PostAsJsonAsync(url, content);
+        //        response.EnsureSuccessStatusCode();
+                
+        //    }
+        //    catch
+        //    {
+
+        //    }
+
+        //    // return URI of the created resource.
+        //    return response.Headers.Location;
+        //}
 
         public static async Task<Product> UpdateProductAsync(Product product)
         {

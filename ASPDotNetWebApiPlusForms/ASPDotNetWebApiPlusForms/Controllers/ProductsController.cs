@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ASPDotNetWebApiPlusForms.Models;
+using Newtonsoft.Json;
 
 namespace ASPDotNetWebApiPlusForms.Controllers
 {
@@ -84,9 +86,24 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        //// POST: api/Products
+        //[ResponseType(typeof(Product))]
+        //public async Task<IHttpActionResult> PostProduct(Product product)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.Product.Add(product);
+        //    await db.SaveChangesAsync();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = product.ID }, product);
+        //}
+
         // POST: api/Products
         [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> PostProduct(Product product)
+        public async Task<IHttpActionResult> PostProduct([FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
@@ -98,6 +115,8 @@ namespace ASPDotNetWebApiPlusForms.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = product.ID }, product);
         }
+
+
 
         // DELETE: api/Products/5
         [ResponseType(typeof(Product))]
