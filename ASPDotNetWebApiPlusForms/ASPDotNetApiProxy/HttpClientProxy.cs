@@ -10,14 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ASPDotNetWebApiPlusForms.Models;
 
-namespace ASPDotNetClient.Logic
+namespace ASPDotNetApiProxy
 {
-    class HttpClientManager
+    public static class HttpClientProxy
     {
         /// <summary>
         /// 
         /// </summary>
-        private static HttpClient client = new HttpClient();
+        public static HttpClient Client = new HttpClient();
 
         /// <summary>
         /// 認証ありのWeb APIを利用する時に利用するパラメータです。
@@ -27,45 +27,54 @@ namespace ASPDotNetClient.Logic
         /// <summary>
         /// ベースURIを設定します
         /// </summary>
-        internal static void SetRootUri(string uri)
+        public static void SetRootUri(string uri)
         {
-            client.BaseAddress = new Uri(uri);
+            Client.BaseAddress = new Uri(uri);
+        }
+
+        /// <summary>
+        /// アクセストークンを考慮したクライアントを返します
+        /// </summary>
+        public static HttpClient Create()
+        {
+            // TODO
+            return Client;
         }
 
         public static async Task<T> ExecutePostAsync<T>(string url, T contents)
         {
             //各種設定を行います。
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpClientManager.BearerValue);
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpClientProxy.BearerValue);
 
             //指定されたContentsを指定されたURLにPOSTします。
-            var response = await client.PostAsJsonAsync<T>(url, contents);
+            var response = await Client.PostAsJsonAsync<T>(url, contents);
 
             //レスポンスのContentsをJson形式から指定されたT型のObjectのインスタンスに変換します。
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
-        public static async Task<IEnumerable<Product>> GetAllProductsAsync()
-        {
-            List<Product> product = null;
-            var url = "products/";
+        //public static async Task<IEnumerable<Product>> GetAllProductsAsync()
+        //{
+        //    List<Product> product = null;
+        //    var url = "products/";
 
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    product = await response.Content.ReadAsAsync<List<Product>>();
-                }
-            }
-            catch
-            {
+        //    try
+        //    {
+        //        HttpResponseMessage response = await Client.GetAsync(url);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            product = await response.Content.ReadAsAsync<List<Product>>();
+        //        }
+        //    }
+        //    catch
+        //    {
 
-            }
+        //    }
 
-            return product?.ToArray();
-        }
+        //    return product?.ToArray();
+        //}
 
         public static async Task<Product> GetProductByIdAsync(int id)
         {
@@ -74,7 +83,7 @@ namespace ASPDotNetClient.Logic
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await Client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     product = await response.Content.ReadAsAsync<Product>();
@@ -89,7 +98,7 @@ namespace ASPDotNetClient.Logic
         }
 
         /// <summary>
-        /// ISPエントリ更新画面情報更新
+        /// 
         /// </summary>
         /// <param name="receiptId"></param>
         /// <param name="aplId"></param>
@@ -99,7 +108,7 @@ namespace ASPDotNetClient.Logic
         {
             var json = JsonConvert.SerializeObject(product);
             var content = new StringContent(json, Encoding.Unicode, "application/json");
-            var response = await client.PostAsync("products/", content).ConfigureAwait(false);
+            var response = await Client.PostAsync("products/", content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -139,7 +148,7 @@ namespace ASPDotNetClient.Logic
 
         public static async Task<Product> UpdateProductAsync(Product product)
         {
-            HttpResponseMessage response = await client.PutAsJsonAsync(
+            HttpResponseMessage response = await Client.PutAsJsonAsync(
                 $"api/products/{product.ID}", product);
             response.EnsureSuccessStatusCode();
 
@@ -150,7 +159,7 @@ namespace ASPDotNetClient.Logic
 
         public static async Task<HttpStatusCode> DeleteProductAsync(int id)
         {
-            HttpResponseMessage response = await client.DeleteAsync(
+            HttpResponseMessage response = await Client.DeleteAsync(
                 $"api/products/{id}");
             return response.StatusCode;
         }

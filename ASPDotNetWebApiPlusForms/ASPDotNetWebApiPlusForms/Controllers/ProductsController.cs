@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ASPDotNetWebApiPlusForms.Models;
+using ASPDotNetWebApiPlusForms.DbAccesses;
 using Newtonsoft.Json;
 
 namespace ASPDotNetWebApiPlusForms.Controllers
@@ -18,6 +19,10 @@ namespace ASPDotNetWebApiPlusForms.Controllers
     public class ProductsController : ApiController
     {
         private SQLServerOnAzure db = new SQLServerOnAzure();
+
+        private static DbAccessForProducts DbAccess = new DbAccessForProducts();
+
+        #region GET
 
         // GET: api/Products
         public IQueryable<Product> GetProduct()
@@ -27,7 +32,7 @@ namespace ASPDotNetWebApiPlusForms.Controllers
 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> GetProduct(int id)
+        public async Task<IHttpActionResult> GetProduct([FromUri] int id)
         {
             Product product = await db.Product.FindAsync(id);
             if (product == null)
@@ -38,22 +43,13 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             return Ok(product);
         }
 
-        //// GET: api/Products/5
-        //[ResponseType(typeof(Product))]
-        //public async Task<Product> GetProductById(int id)
-        //{
-        //    Product product = await db.Product.FindAsync(id);
-        //    if (product == null)
-        //    {
-        //        return null;
-        //    }
+        #endregion
 
-        //    return product;
-        //}
+        #region PUT
 
         // PUT: api/Products/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        public async Task<IHttpActionResult> PutProduct([FromUri] int id, [FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
@@ -86,20 +82,7 @@ namespace ASPDotNetWebApiPlusForms.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        //// POST: api/Products
-        //[ResponseType(typeof(Product))]
-        //public async Task<IHttpActionResult> PostProduct(Product product)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.Product.Add(product);
-        //    await db.SaveChangesAsync();
-
-        //    return CreatedAtRoute("DefaultApi", new { id = product.ID }, product);
-        //}
+        #endregion
 
         // POST: api/Products
         [ResponseType(typeof(Product))]
