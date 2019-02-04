@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using ASPDotNetWebApiPlusForms.Models;
+using ASPDotNetWebApi.Models;
 using Newtonsoft.Json;
 
 namespace ASPDotNetApiProxy.Proxies

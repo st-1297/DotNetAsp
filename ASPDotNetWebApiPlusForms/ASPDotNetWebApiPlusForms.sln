@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPDotNetWebApiPlusForms", "ASPDotNetWebApiPlusForms\ASPDotNetWebApiPlusForms.csproj", "{D76BC2CB-4694-4711-AFB3-C5699148A2E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPDotNetClient", "ASPDotNetClient\ASPDotNetClient.csproj", "{E47BFCC5-2DF6-4F5B-9D27-6B53E33B1A5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPDotNetApiProxy", "ASPDotNetApiProxy\ASPDotNetApiProxy.csproj", "{CA43EA12-6DBE-4AE0-8006-B1526C4BD34A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPDotNetWebApi", "ASPDotNetWebApi\ASPDotNetWebApi.csproj", "{D76BC2CB-4694-4711-AFB3-C5699148A2E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E47BFCC5-2DF6-4F5B-9D27-6B53E33B1A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E47BFCC5-2DF6-4F5B-9D27-6B53E33B1A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E47BFCC5-2DF6-4F5B-9D27-6B53E33B1A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{CA43EA12-6DBE-4AE0-8006-B1526C4BD34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA43EA12-6DBE-4AE0-8006-B1526C4BD34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA43EA12-6DBE-4AE0-8006-B1526C4BD34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D76BC2CB-4694-4711-AFB3-C5699148A2E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

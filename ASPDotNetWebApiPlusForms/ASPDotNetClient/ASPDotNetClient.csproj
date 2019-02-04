@@ -53,15 +53,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form\MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form\MainForm.resx">
+    <Compile Include="_api_dbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_api_dbDataSet.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -74,6 +79,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\ASPDotNetWebApi.Models.Book.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -83,18 +89,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="_api_dbDataSet.xsc">
+      <DependentUpon>_api_dbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_api_dbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_api_dbDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_api_dbDataSet.xss">
+      <DependentUpon>_api_dbDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ASPDotNetApiProxy\ASPDotNetApiProxy.csproj">
       <Project>{ca43ea12-6dbe-4ae0-8006-b1526c4bd34a}</Project>
       <Name>ASPDotNetApiProxy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ASPDotNetWebApiPlusForms\ASPDotNetWebApiPlusForms.csproj">
+    <ProjectReference Include="..\ASPDotNetWebApi\ASPDotNetWebApi.csproj">
       <Project>{d76bc2cb-4694-4711-afb3-c5699148a2e1}</Project>
-      <Name>ASPDotNetWebApiPlusForms</Name>
+      <Name>ASPDotNetWebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
