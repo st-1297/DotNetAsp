@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using ASPDotNetApiProxy.DbModels;
 using Newtonsoft.Json;
-using System.Linq;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using ASPDotNetWebApi.Models;
 
 namespace ASPDotNetApiProxy
 {
     public static class HttpClientProxy
     {
+
+        #region プロパティ
+
         /// <summary>
         /// 
         /// </summary>
@@ -23,6 +24,10 @@ namespace ASPDotNetApiProxy
         /// 認証ありのWeb APIを利用する時に利用するパラメータです。
         /// </summary>
         public static string BearerValue { get; set; } = string.Empty;
+
+        #endregion
+
+        #region メソッド
 
         /// <summary>
         /// ベースURIを設定します
@@ -55,30 +60,22 @@ namespace ASPDotNetApiProxy
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
-        //public static async Task<IEnumerable<Product>> GetAllProductsAsync()
-        //{
-        //    List<Product> product = null;
-        //    var url = "products/";
+        #endregion
 
-        //    try
-        //    {
-        //        HttpResponseMessage response = await Client.GetAsync(url);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            product = await response.Content.ReadAsAsync<List<Product>>();
-        //        }
-        //    }
-        //    catch
-        //    {
+        #region SendAsync
 
-        //    }
-
-        //    return product?.ToArray();
-        //}
-
-        public static async Task<Product> GetProductByIdAsync(int id)
+        public static async Task<HttpRequestMessage> SendAsync(HttpCompletionOption httpCompletion, CancellationToken cancellationToken)
         {
-            Product product = null;
+            var json = new HttpRequestMessage();
+
+            return json;
+        }
+
+        #endregion
+
+        public static async Task<PRODUCT> GetProductByIdAsync(int id)
+        {
+            PRODUCT product = null;
             var url = $"products/?id={id}";
 
             try
@@ -86,7 +83,7 @@ namespace ASPDotNetApiProxy
                 HttpResponseMessage response = await Client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    product = await response.Content.ReadAsAsync<Product>();
+                    product = await response.Content.ReadAsAsync<PRODUCT>();
                 }
             }
             catch
@@ -104,7 +101,7 @@ namespace ASPDotNetApiProxy
         /// <param name="aplId"></param>
         /// <param name="entryId"></param>
         /// <returns></returns>
-        public static async Task<Product> CreateProductAsync(Product product)
+        public static async Task<PRODUCT> CreateProductAsync(PRODUCT product)
         {
             var json = JsonConvert.SerializeObject(product);
             var content = new StringContent(json, Encoding.Unicode, "application/json");
@@ -116,7 +113,7 @@ namespace ASPDotNetApiProxy
             }
 
             var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<Product>(body);
+            return JsonConvert.DeserializeObject<PRODUCT>(body);
         }
 
         //public static async Task<Uri> CreateProductAsync(Product product)
@@ -146,14 +143,14 @@ namespace ASPDotNetApiProxy
         //    return response.Headers.Location;
         //}
 
-        public static async Task<Product> UpdateProductAsync(Product product)
+        public static async Task<PRODUCT> UpdateProductAsync(PRODUCT product)
         {
             HttpResponseMessage response = await Client.PutAsJsonAsync(
                 $"api/products/{product.ID}", product);
             response.EnsureSuccessStatusCode();
 
             // Deserialize the updated product from the response body.
-            product = await response.Content.ReadAsAsync<Product>();
+            product = await response.Content.ReadAsAsync<PRODUCT>();
             return product;
         }
 

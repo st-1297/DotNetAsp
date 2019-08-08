@@ -18,9 +18,13 @@ namespace ASPDotNetWebApi.Controllers
 {
     public class ProductsController : ApiController
     {
+        #region プロパティ
+
         private SQLServerOnAzure db = new SQLServerOnAzure();
 
         private static DbAccessForProducts DbAccess = new DbAccessForProducts();
+
+        #endregion
 
         #region GET
 
@@ -84,6 +88,8 @@ namespace ASPDotNetWebApi.Controllers
 
         #endregion
 
+        #region POST
+
         // POST: api/Products
         [ResponseType(typeof(Product))]
         public async Task<IHttpActionResult> PostProduct([FromBody] Product product)
@@ -99,7 +105,9 @@ namespace ASPDotNetWebApi.Controllers
             return CreatedAtRoute("DefaultApi", new { id = product.ID }, product);
         }
 
+        #endregion
 
+        #region DELETE
 
         // DELETE: api/Products/5
         [ResponseType(typeof(Product))]
@@ -117,6 +125,10 @@ namespace ASPDotNetWebApi.Controllers
             return Ok(product);
         }
 
+        #endregion
+
+        #region メソッド
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -130,5 +142,7 @@ namespace ASPDotNetWebApi.Controllers
         {
             return db.Product.Count(e => e.ID == id) > 0;
         }
+
+        #endregion
     }
 }
